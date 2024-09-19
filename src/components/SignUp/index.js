@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { FirebaseContext } from "../Firebase";
 import { Link, useNavigate } from "react-router-dom"; // Importation de useNavigate
+import { doc, setDoc } from "firebase/firestore"; // Importer Firestore pour ajouter un utilisateur
 
 const Signup = () => {
   const firebase = useContext(FirebaseContext);
@@ -22,11 +23,18 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { email, password } = loginData;
+    const { email, password, pseudo } = loginData;
 
     firebase
       .signupUser(email, password)
-      .then((user) => {
+      .then((authUser) => {
+        // Ajouter l'utilisateur à Firestore
+        return setDoc(doc(firebase.db, "users", authUser.user.uid), {
+          pseudo,
+          email,
+        });
+      })
+      .then(() => {
         setloginData({ ...data });
         navigate("/welcome"); // Utilisation de navigate pour rediriger
       })

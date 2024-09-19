@@ -8,6 +8,7 @@ import Welcome from "../Welcome";
 import Login from "../Login";
 import Signup from "../SignUp";
 import ErrorPage from "../ErrorPage";
+import ForgetPassword from "../ForgetPassword";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/login" Component={Login} />
         <Route path="/signup" Component={Signup} />
         <Route path="*" Component={ErrorPage} />
+        <Route path="/forgetpassword" Component={ForgetPassword} />
       </Routes>
 
       <Footer />
